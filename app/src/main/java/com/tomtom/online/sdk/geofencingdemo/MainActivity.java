@@ -51,7 +51,7 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements LocationUpdateListener, OnMapReadyCallback {
     private static final int PERMISSION_REQUEST_LOCATION = 0;
-    private static final int DISTANCE_IN_METERS = 1000;
+    private static final int DISTANCE_IN_METERS = 10;
     private static String PROJECT_ID;
     private static String GEOFENCING_APIKEY;
 
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements LocationUpdateLis
             refreshGeofencingRaport(currentLocation);
         } else if (getDistanceBetweenTwoLocationsInMeters(previousLocation, currentLocation) > DISTANCE_IN_METERS) {
             previousLocation = currentLocation;
-            refreshGeofencingRaport(currentLocation);
+            //refreshGeofencingRaport(currentLocation);
         }
     }
 
@@ -159,6 +159,11 @@ public class MainActivity extends AppCompatActivity implements LocationUpdateLis
         return geofenceBaseUrl + fenceId + "?key=" + GEOFENCING_APIKEY;
     }
 
+
+    /*
+    depends on which fence type it is, it'll have either list of latlongs as a
+    *
+    * */
     @NotNull
     private List<LatLng> getFenceCoordinates(FenceDetails fenceDetails) throws IOException, JSONException {
         List<LatLng> latLngList = new LinkedList<>();
