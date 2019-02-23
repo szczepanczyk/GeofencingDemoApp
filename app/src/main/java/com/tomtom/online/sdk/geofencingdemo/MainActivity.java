@@ -97,12 +97,14 @@ public class MainActivity extends AppCompatActivity implements LocationUpdateLis
 
     @Override
     public void onLocationChanged(Location currentLocation) {
-        if (previousLocation == null) {
-            previousLocation = currentLocation;
-            refreshGeofencingRaport(currentLocation);
-        } else if (getDistanceBetweenTwoLocationsInMeters(previousLocation, currentLocation) > DISTANCE_IN_METERS) {
-            previousLocation = currentLocation;
-            //refreshGeofencingRaport(currentLocation);
+        if (this.tomtomMap != null) {
+            if (previousLocation == null) {
+                previousLocation = currentLocation;
+                refreshGeofencingRaport(currentLocation);
+            } else if (getDistanceBetweenTwoLocationsInMeters(previousLocation, currentLocation) > DISTANCE_IN_METERS) {
+                previousLocation = currentLocation;
+                //refreshGeofencingRaport(currentLocation);
+            }
         }
     }
 
@@ -159,11 +161,6 @@ public class MainActivity extends AppCompatActivity implements LocationUpdateLis
         return geofenceBaseUrl + fenceId + "?key=" + GEOFENCING_APIKEY;
     }
 
-
-    /*
-    depends on which fence type it is, it'll have either list of latlongs as a
-    *
-    * */
     @NotNull
     private List<LatLng> getFenceCoordinates(FenceDetails fenceDetails) throws IOException, JSONException {
         List<LatLng> latLngList = new LinkedList<>();
